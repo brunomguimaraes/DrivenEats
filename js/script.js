@@ -4,6 +4,8 @@ function handleClick(divItem) {
     const subsecaoAtual = divItem.parentNode
     const itemSelecionado = subsecaoAtual.querySelector('.selecionado')
 
+    const botaoFecharPedido = document.querySelector('.botao-fechar')
+    const botaoFecharTexto = botaoFecharPedido.querySelector('span')
 
     if (itemSelecionado === null) {
         divItem.classList.add('selecionado')
@@ -15,8 +17,6 @@ function handleClick(divItem) {
     }
 
     const pedidoPronto = verificarPedido()
-    const botaoFecharPedido = document.querySelector('.botao-fechar')
-    const botaoFecharTexto = botaoFecharPedido.querySelector('span')
 
     if (pedidoPronto) {
         botaoFecharPedido.classList.add('botao-verde')
@@ -37,4 +37,58 @@ function verificarPedido() {
 function temItemSelecionado(cssSelectorSubsecao) {
     const subsecao = document.querySelector(cssSelectorSubsecao)
     return subsecao.querySelector('.selecionado') !== null
+}
+
+function fecharPedido() {
+    const pedidoPronto = verificarPedido()
+
+    if (! pedidoPronto) return
+
+    const numeroRestaurante = '5548984658779'
+    const urlBase = `https://wa.me/${numeroRestaurante}?text=`
+
+    const nomeComida = pegarNomeItemSelecionadoDaSubsecao('.comida')
+    const nomeBebida = pegarNomeItemSelecionadoDaSubsecao('.bebida')
+    const nomeSobremesa = pegarNomeItemSelecionadoDaSubsecao('.sobremesa')
+
+    let precoComida = pegarPrecoItemSelecionadoDaSubsecao('.comida')
+    let precoBebida = pegarPrecoItemSelecionadoDaSubsecao('.bebida')
+    let precoSobremesa = pegarPrecoItemSelecionadoDaSubsecao('.bebida')
+
+    precoComida = tratarPreco(precoComida)
+    precoBebida = tratarPreco(precoBebida)
+    precoSobremesa = tratarPreco(precoSobremesa)
+
+    let precoTotal = precoComida + precoBebida + precoSobremesa
+
+    precoTotal = precoTotal.toFixed(2)
+
+    let mensagemPedido = `Olá, gostaria de fazer o pedido:
+    - Prato: ${nomeComida}
+    - Bebida: ${nomeBebida}
+    - Sobremesa: ${nomeSobremesa}
+    Total: R$ ${precoTotal}`
+
+    const urlCompleta = urlBase + encodeURIComponent(mensagemPedido)
+
+    window.open(urlCompleta)
+}
+
+function pegarNomeItemSelecionadoDaSubsecao(cssSelectorSubsecao) {
+    const itemSelecionado = document.querySelector(cssSelectorSubsecao)
+
+    const nomeItem = itemSelecionado.querySelector('.nome-item').innerHTML
+    return nomeItem
+}
+
+function pegarPrecoItemSelecionadoDaSubsecao(cssSelectorSubsecao) {
+    const itemSelecionado = document.querySelector(cssSelectorSubsecao)
+
+    const precoItem = itemSelecionado.querySelector('.preco').innerHTML
+    return precoItem
+}
+
+function tratarPreco(stringPreco) {
+    const stringPrecoTratada = stringPreco.replace('R$ ', '').replace(',', '.')
+    return Number(stringPrecoTratada)
 }
