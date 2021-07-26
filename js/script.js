@@ -63,7 +63,7 @@ function confirmarPedido(){
 
     alterarTexto('.preco-total', precoTotal)
 
-    alterarTexto('.modal').classList.remove('oculto')
+    document.querySelector('.modal').classList.remove('oculto')
 }
 
 function voltarParaPaginaSelecao() {
