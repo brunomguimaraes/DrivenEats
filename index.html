@@ -123,9 +123,33 @@
         </div>
     </div>
     <div class="rodape">
-        <button class="botao-fechar" onclick="fecharPedido()">
+        <button class="botao-fechar" onclick="confirmarPedido()">
             <span class="texto-botao-fechar">Selecione os 3 itens<br>para fechar o pedido</span>
         </button>
+    </div>
+
+    <div class="modal oculto">
+        <div class="confirmar-pedido">
+            <p>Confirme seu pedido</p>
+            <span>
+                <span class="comida-selecionada">Frango Yin Yang</span>
+                <span class="preco-comida-selecionada">14,90</span>
+            </span>
+            <span>
+                <span class="bebida-selecionada">Coquinha gelada</span>
+                <span class="preco-bebida-selecionada">4,90</span>
+            </span>
+            <span>
+                <span class="sobremesa-selecionada">Pudim</span>
+                <span class="preco-sobremesa-selecionada">7,90</span>
+            </span>
+            <span class="ultimo-span">
+                <span>Total</span>
+                <span class="preco-total">R$ 27,70</span>
+            </span>
+            <button class="tudo-certo" onclick="fecharPedido()">Tudo certo, pode pedir!</button>
+            <button class="cancelar" onclick="voltarParaPaginaSelecao()">Cancelar</button>
+        </div>
     </div>
 
     <script src="js/script.js"></script>
