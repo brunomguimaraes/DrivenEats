@@ -46,7 +46,7 @@ function confirmarPedido(){
 
     let precoComida = pegarPrecoItemSelecionadoDaSubsecao('.comida')
     let precoBebida = pegarPrecoItemSelecionadoDaSubsecao('.bebida')
-    let precoSobremesa = pegarPrecoItemSelecionadoDaSubsecao('.bebida')
+    let precoSobremesa = pegarPrecoItemSelecionadoDaSubsecao('.sobremesa')
 
     let precoTotal = somarTotalPedido(precoComida, precoBebida, precoSobremesa)
 
@@ -119,14 +119,16 @@ function somarTotalPedido(precoComida, precoBebida, precoSobremesa) {
 }
 
 function pegarNomeItemSelecionadoDaSubsecao(cssSelectorSubsecao) {
-    const itemSelecionado = document.querySelector(cssSelectorSubsecao)
+    const subsecao = document.querySelector(cssSelectorSubsecao)
+    const itemSelecionado = subsecao.querySelector('.selecionado')
 
     const nomeItem = itemSelecionado.querySelector('.nome-item').innerHTML
     return nomeItem
 }
 
 function pegarPrecoItemSelecionadoDaSubsecao(cssSelectorSubsecao) {
-    const itemSelecionado = document.querySelector(cssSelectorSubsecao)
+    const subsecao = document.querySelector(cssSelectorSubsecao)
+    const itemSelecionado = subsecao.querySelector('.selecionado')
 
     const precoItem = itemSelecionado.querySelector('.preco').innerHTML
     return tratarPreco(precoItem)
