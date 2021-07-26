@@ -18,6 +18,10 @@ function handleClick(divItem) {
 
 function fecharPedido() {
 
+    const nome = prompt("Qual o seu nome?")
+    const endereco = prompt("Qual o seu endereço?")
+
+
     const nomeComida = document.querySelector('.comida-selecionada').innerHTML
     const nomeBebida = document.querySelector('.bebida-selecionada').innerHTML
     const nomeSobremesa = document.querySelector('.sobremesa-selecionada').innerHTML
@@ -26,7 +30,7 @@ function fecharPedido() {
 
     precoTotal = tratarPreco(precoTotal)
 
-    const mensagemPedido = construirMensagemPedido(nomeComida, nomeBebida, nomeSobremesa, precoTotal)
+    const mensagemPedido = construirMensagemPedido(nomeComida, nomeBebida, nomeSobremesa, precoTotal, nome, endereco)
 
     const numeroRestaurante = '5548984658779'
 
@@ -44,9 +48,9 @@ function confirmarPedido(){
     const nomeBebida = pegarNomeItemSelecionadoDaSubsecao('.bebida')
     const nomeSobremesa = pegarNomeItemSelecionadoDaSubsecao('.sobremesa')
 
-    let precoComida = pegarPrecoItemSelecionadoDaSubsecao('.comida')
-    let precoBebida = pegarPrecoItemSelecionadoDaSubsecao('.bebida')
-    let precoSobremesa = pegarPrecoItemSelecionadoDaSubsecao('.sobremesa')
+    let precoComida = pegarPrecoItemSelecionadoDaSubsecao('.comida').replace('.', ',')
+    let precoBebida = pegarPrecoItemSelecionadoDaSubsecao('.bebida').replace('.', ',')
+    let precoSobremesa = pegarPrecoItemSelecionadoDaSubsecao('.sobremesa').replace('.', ',')
 
     let precoTotal = somarTotalPedido(precoComida, precoBebida, precoSobremesa)
 
@@ -64,6 +68,7 @@ function confirmarPedido(){
     alterarTexto('.preco-total', precoTotal)
 
     document.querySelector('.modal').classList.remove('oculto')
+
 }
 
 function voltarParaPaginaSelecao() {
@@ -134,15 +139,26 @@ function pegarPrecoItemSelecionadoDaSubsecao(cssSelectorSubsecao) {
     return tratarPreco(precoItem)
 }
 
-function construirMensagemPedido(nomeComida, nomeBebida, nomeSobremesa, precoTotal) {
+function construirMensagemPedido(nomeComida, nomeBebida, nomeSobremesa, precoTotal, nome, endereco) {
     
     const mensagemPedido = `Olá, gostaria de fazer o pedido:
     - Prato: *${nomeComida}*
     - Bebida: *${nomeBebida}*
     - Sobremesa: *${nomeSobremesa}*
-    Total: *R$ ${precoTotal}*`
+    Total: *R$ ${precoTotal}*
+    
+    `
+    let mensagemIdentificacao
 
-    return mensagemPedido
+    if (nome !== null && endereco !== null) {
+        mensagemIdentificacao = `Cliente: ${nome}
+        Endereço: ${endereco}`
+    } else {
+        mensagemIdentificacao = `Cliente: Zé
+        Endereço: Rua dos Bobos`
+    }
+
+    return mensagemPedido + mensagemIdentificacao
 }
 
 function enviarMensagemWhatsapp(numero, mensagem) {
